@@ -1,0 +1,22 @@
+how to use this program:
+--> python3 downloader.py arg1 arg2 arg3 arg4
+#arg1: IRI Model Version  format: 0->iri2016 1->iri2020 2->iri2012 3->iri2007
+#arg2: time 
+        format:year-mmdd-hour
+#arg3: Longitude(degrees) 
+        format:start-stop-step
+#arg4: Latitude(degrees) 
+        format:start-stop-step
+#arg5: height(meters)
+
+
+
+
+
+Created Files:
+ForEach successful run, the following Files would be generated:
+    1) tec.txt: 
+        format:lat,lon,tec(1E16m-2)
+    2) extractedData.txt: 
+        format:   LONG ELECTRON DENSITY   TEMPERATURES      ION PERCENTAGES[%]*10    1E16m-2
+                  GEOD Ne/cm-3 Ne/NmF2 Tn/K  Ti/K  Te/K  O+  N+  H+ He+ O2+ NO+ Clust TEC t/%
