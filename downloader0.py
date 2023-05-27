@@ -19,22 +19,33 @@ url='https://kauai.ccmc.gsfc.nasa.gov/ir_server/iri/submitForm'
 #year of data
 dates=sys.argv[2].split('-')
 year=int(dates[0])
+dates=dates[1].split(':')
 #month and day : mmdd
-mmdd=dates[1]
+# mmdd="0211"
+mmdd=dates[0]
 
 #hour
-hour=dates[2]
+# hour="10"
+hour=dates[1]
 
-long=sys.argv[3].split('-')
+
+
+#Longitude [start,stop,step]
+# Lon=["0","360",1]
+long=sys.argv[2].split('-')
 Lon=[long[0],long[1],float(long[2])]
-lats=sys.argv[4].split('-')
+#Longitude [start,stop,step]
+# Lat=[30,40,1]
+lats=sys.argv[3].split('-')
 Lat=[int(lats[0]),int(lats[1]),float(lats[2])]
-print(Lat)
 
+# #latitude
+# lat=str(Lat[0])
 #longitude
 lon=Lon[0]
 #height
-height=sys.argv[5]
+# height="300"
+height=sys.argv[4]
 #tecHeight
 tecHeight="1500"
 
@@ -56,15 +67,11 @@ def extractParams(resp,TEC,DATA,lat):
         buffData=[[float(j) for j in i.split(' ') if j!=''] for i in buffData[initIndex:]]
         # print(buffData)
         DATA.append('latitide(degree): '+lat)
-        # DATA.append(str(buffData))
-        [DATA.append(str(i)) for i in buffData]
+        DATA.append(str(buffData))
         TEC.append([lat+','+str(i[0])+','+str(i[-2]) for i in buffData[:-1]])
 
 def exe(timeOut,Lat,TEC,DATA):
-    buffer=int((Lat[1]-Lat[0]+1)/Lat[2])
-    for lat1 in range(buffer):
-        lat=Lat[0]+lat1*Lat[2]
-        print(lat)
+    for lat in range(Lat[0],Lat[1],Lat[2]):
         try:
             resp=download(str(lat))
             extractParams(resp,TEC,DATA,str(lat))
@@ -79,10 +86,10 @@ def saveFiles(DATA,TEC):
     [[file1.write(j+'\n') for j in i ] for i in TEC]
     file1.close()
     file2=open('extractedData.txt','w')
-    [file2.write(i+'\n') for i in DATA]
+    [[file2.write(str(j)+'\n') for j in i ] for i in DATA]
     file2.close()
     
-
+print(sys.argv[1])
 
 exe(timeOut,Lat,TEC,DATA)
 saveFiles(DATA,TEC)
