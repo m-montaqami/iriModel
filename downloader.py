@@ -54,9 +54,7 @@ def extractParams(resp,TEC,DATA,lat):
     initIndex=[buffData.index(i) for i in buffData if 'GEOD' in i][0]+1
     if(initIndex!=1):
         buffData=[[float(j) for j in i.split(' ') if j!=''] for i in buffData[initIndex:]]
-        # print(buffData)
         DATA.append('latitide(degree): '+lat)
-        # DATA.append(str(buffData))
         [DATA.append(str(i)) for i in buffData]
         TEC.append([lat+','+str(i[0])+','+str(i[-2]) for i in buffData[:-1]])
 
@@ -70,7 +68,7 @@ def exe(timeOut,Lat,TEC,DATA):
             extractParams(resp,TEC,DATA,str(lat))
             time.sleep(timeOut)
             resp.close()
-            print('lat: '+str(lat)+' passed')
+            #print('lat: '+str(lat)+' passed')
         except:
             pass
 
